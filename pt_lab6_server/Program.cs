@@ -20,11 +20,11 @@ namespace pt_lab6_server
             UdpClient myUdpClientA = new UdpClient(localIPEndPointA);
             IPEndPoint remoteIPEndPoint;
 
-            HashSet<IPEndPoint> ppl = new HashSet<IPEndPoint>();
+            HashSet<IPEndPoint> clients = new HashSet<IPEndPoint>();
 
             int userID = 0;
 
-            BlockingCollection<byte> queue2 = new BlockingCollection<byte>();
+            BlockingCollection<byte[]> queue = new BlockingCollection<byte[]>();
 
             byte[] data;
             string msg;
@@ -36,17 +36,25 @@ namespace pt_lab6_server
                     {
                         var remoteIPEndPointA = new IPEndPoint(IPAddress.Any, 1337);
                         var dataA = myUdpClientA.Receive(ref remoteIPEndPointA);
+                        Console.WriteLine("{0}> {1}", remoteIPEndPointA, "receiving packets");
+                        queue.Add(dataA);
+                    }
+                }
+            );
 
-                        //ppl.Add(remoteIPEndPointA);
-
-                        //var msgA = Encoding.ASCII.GetString(dataA, 0, dataA.Length);
-                        //int id = Int32.Parse(msgA.Substring(0, msgA.IndexOf(";")));
-
-                        //dataA = Encoding.ASCII.GetBytes(msgA);
-                        foreach (IPEndPoint dude in ppl)
+            Task dataSender = Task.Run(
+                () =>
+                {
+                    while (true)
+                    {
+                        if (queue.Count != 0)
                         {
-                            Console.WriteLine("{0}> {1}", dude, "sending packets");
-                            myUdpClientA.Send(dataA, dataA.Length, dude);
+                            var packet = queue.Take();
+                            foreach (IPEndPoint client in clients)
+                            {
+                                Console.WriteLine("{0}> {1}", client, "sending packets");
+                                myUdpClientA.SendAsync(packet, packet.Length, client);
+                            }
                         }
                     }
                 }
@@ -65,16 +73,17 @@ namespace pt_lab6_server
 
                     Console.WriteLine("{0}> {1}", remoteIPEndPoint, msg);
 
-/*
-                    remoteIPEndPoint = new IPEndPoint(IPAddress.Any, 0);
-                    //remoteIPEndPoint.Port = 1337;
-                    data = myUdpClient.Receive(ref remoteIPEndPoint);
-                    Console.WriteLine("{0}> {1}", remoteIPEndPoint, Encoding.ASCII.GetString(data, 0, data.Length));
-*/
+                    remoteIPEndPoint.Port++;
+                    clients.Add(remoteIPEndPoint);
+
+                }
+                if (msg == "Disconnect")
+                {
+                    Console.WriteLine("{0}> {1}", remoteIPEndPoint, msg);
 
                     remoteIPEndPoint.Port++;
-                    ppl.Add(remoteIPEndPoint);
-
+                    var res = clients.Remove(remoteIPEndPoint);
+                    Console.WriteLine("Attempting to remove {0} - result: {1}", remoteIPEndPoint, res);
                 }
             }
         }
