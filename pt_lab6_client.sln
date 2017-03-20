@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pt_lab6_client", "pt_lab6_client\pt_lab6_client.csproj", "{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pt_lab6_server", "pt_lab6_server\pt_lab6_server.csproj", "{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
