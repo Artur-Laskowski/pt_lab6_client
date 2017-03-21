@@ -45,6 +45,8 @@ namespace pt_lab6_client
 
         private bool isConnected;
 
+        Color color = Color.FromRgb(255, 255, 255);
+
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
@@ -104,18 +106,26 @@ namespace pt_lab6_client
 
                         Packet p;
 
+                        byte receivedUserID = dataA[dataA.Length - 1];
+
+                        byte[] receivedColor = {dataA[dataA.Length - 4], dataA[dataA.Length - 3], dataA[dataA.Length - 2]};
+
+                        byte[] packetBytes = new byte[dataA.Length - 4];
+                        Array.Copy(dataA, packetBytes, dataA.Length - 4);
+
                         IFormatter formatter = new BinaryFormatter();
                         using (MemoryStream stream = new MemoryStream(dataA))
                         {
                             p = (Packet)formatter.Deserialize(stream);
                             data = stream.ToArray();
                         }
-                        if (p.userID != userID)
+                        if (receivedUserID != userID)
                         {
+                            //Dispatcher.Invoke(() => label.Content = receivedUserID + " moje " + userID);
                             Dispatcher.BeginInvoke(new Action(() =>
                             {
                                 Line line = new Line();
-                                line.Stroke = new SolidColorBrush(Color.FromRgb(p.color[0], p.color[1], p.color[2]));
+                                line.Stroke = new SolidColorBrush(Color.FromRgb(receivedColor[0], receivedColor[1], receivedColor[2]));
                                 line.X1 = p.points[0];
                                 line.Y1 = p.points[1];
                                 line.X2 = p.points[2];
@@ -162,6 +172,12 @@ namespace pt_lab6_client
         {
             if (e.ButtonState == MouseButtonState.Pressed)
                 currentPoint = e.GetPosition(this);
+
+            byte[] colors = { Byte.Parse(textBoxR.Text), Byte.Parse(textBoxG.Text), Byte.Parse(textBoxB.Text) };
+
+            color = Color.FromRgb(colors[0], colors[1], colors[2]);
+
+            myUdpClientA.Send(colors, colors.Length);
         }
 
         private void paintSurface_MouseMove(object sender, MouseEventArgs e)
@@ -170,9 +186,7 @@ namespace pt_lab6_client
             {
                 Line line = new Line();
 
-                byte[] colors = { Byte.Parse(textBoxR.Text), Byte.Parse(textBoxG.Text), Byte.Parse(textBoxB.Text) };
 
-                Color color = Color.FromRgb(colors[0], colors[1], colors[2]);
 
                 line.Stroke = new SolidColorBrush(color);
                 line.X1 = currentPoint.X;
@@ -186,7 +200,7 @@ namespace pt_lab6_client
                 {
                     double[] points = {line.X1, line.Y1, line.X2, line.Y2};
 
-                    Packet p = new Packet(points, userID, colors);
+                    Packet p = new Packet(points);
 
                     byte[] data;
                     IFormatter formatter = new BinaryFormatter();
@@ -207,19 +221,13 @@ namespace pt_lab6_client
     class Packet
     {
         public double[] points = new double[4];
-        public int userID;
-        public byte[] color = new byte[3];
 
-        public Packet(double[] points, int userID, byte[] color)
+        public Packet(double[] points)
         {
             for (int i = 0; i < points.Length; i++)
             {
                 this.points[i] = points[i];
             }
-            this.userID = userID;
-            this.color[0] = color[0];
-            this.color[1] = color[1];
-            this.color[2] = color[2];
         }
     }
 }
