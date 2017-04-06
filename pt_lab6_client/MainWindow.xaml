@@ -5,19 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:pt_lab6_client"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" Width="525" Closed="Window_Closed">
     <Grid>
-        <Label x:Name="label" Content="" HorizontalAlignment="Left" Margin="405,289,0,0" VerticalAlignment="Top" Width="103"/>
+        <Label x:Name="label" Content="Offline" HorizontalAlignment="Left" Margin="405,289,0,0" VerticalAlignment="Top" Width="103" FlowDirection="RightToLeft"/>
         <Button x:Name="button1" Content="Connect" HorizontalAlignment="Left" Margin="10,292,0,0" VerticalAlignment="Top" Width="75" Click="button1_Click"/>
         <Button x:Name="button2" Content="Disconnect" HorizontalAlignment="Left" Margin="90,292,0,0" VerticalAlignment="Top" Width="75" Click="button2_Click" IsEnabled="False"/>
-        <Canvas x:Name="paintSurface" HorizontalAlignment="Left" Height="287" VerticalAlignment="Top" Width="508" MouseDown="paintSurface_MouseDown" MouseMove="paintSurface_MouseMove">
+        <Canvas x:Name="paintSurface" HorizontalAlignment="Left" Height="284" VerticalAlignment="Top" Width="508" MouseDown="paintSurface_MouseDown" MouseMove="paintSurface_MouseMove">
             <Canvas.Background>
                 <SolidColorBrush Color="White" Opacity="0"/>
             </Canvas.Background>
         </Canvas>
-        <TextBox x:Name="textBoxR" HorizontalAlignment="Left" Height="23" Margin="170,293,0,0" TextWrapping="Wrap" Text="255" VerticalAlignment="Top" Width="53"/>
-        <TextBox x:Name="textBoxG" HorizontalAlignment="Left" Height="23" Margin="228,293,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53"/>
-        <TextBox x:Name="textBoxB" HorizontalAlignment="Left" Height="23" Margin="286,292,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="53"/>
+        <Slider x:Name="sliderR" HorizontalAlignment="Left" Margin="180,292,0,0" VerticalAlignment="Top" Width="61" Maximum="255" ValueChanged="updateColor" Foreground="{x:Null}" BorderBrush="{x:Null}" Background="{x:Null}"/>
+        <Slider x:Name="sliderG" HorizontalAlignment="Left" Margin="246,292,0,0" VerticalAlignment="Top" Width="61" Maximum="255" ValueChanged="updateColor"/>
+        <Slider x:Name="sliderB" HorizontalAlignment="Left" Margin="312,292,0,0" VerticalAlignment="Top" Width="61" Maximum="255" ValueChanged="updateColor"/>
+        <Canvas x:Name="colorPreview" HorizontalAlignment="Left" Height="18" Margin="378,292,0,0" VerticalAlignment="Top" Width="22" Background="#FF9A9999"/>
 
     </Grid>
 </Window>
