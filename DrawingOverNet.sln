@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pt_lab6_client", "pt_lab6_client\pt_lab6_client.csproj", "{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "client", "pt_lab6_client\client.csproj", "{C6FC0BF3-BF74-40A0-A75D-C514B492B8EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pt_lab6_server", "pt_lab6_server\pt_lab6_server.csproj", "{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "server", "pt_lab6_server\server.csproj", "{D27A2387-5A1A-4579-B6E9-31CC54CB0D4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
